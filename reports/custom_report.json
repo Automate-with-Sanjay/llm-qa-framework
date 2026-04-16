@@ -1,0 +1,173 @@
+{
+  "summary": {
+    "total_tests": 6,
+    "passed": 1,
+    "failed": 5,
+    "pass_rate": "17%",
+    "average_score": 0.56,
+    "average_latency_ms": 2269.1
+  },
+  "results": [
+    {
+      "id": "CB001",
+      "name": "Support chatbot \u2014 friendly greeting",
+      "passed": false,
+      "score": 0.67,
+      "latency_ms": 3317.7,
+      "checks": {
+        "keywords": {
+          "passed": true,
+          "expected_found": [
+            "help",
+            "order"
+          ],
+          "expected_missing": [],
+          "forbidden_found": []
+        },
+        "length": {
+          "passed": true,
+          "char_count": 113,
+          "detail": "Length OK: 113 chars"
+        },
+        "tone": {
+          "passed": false,
+          "friendly_signals": 0
+        }
+      },
+      "prompt": "Hi, I need help with my order.",
+      "response_preview": "Of course! How can I assist you with your order? Please provide me with the details, and I'll do my best to help.",
+      "timestamp": "2026-04-15T11:00:37"
+    },
+    {
+      "id": "CB002",
+      "name": "Copilot \u2014 code explanation",
+      "passed": false,
+      "score": 0.5,
+      "latency_ms": 2861.3,
+      "checks": {
+        "keywords": {
+          "passed": true,
+          "expected_found": [
+            "loop",
+            "print",
+            "0",
+            "9"
+          ],
+          "expected_missing": [],
+          "forbidden_found": []
+        },
+        "length": {
+          "passed": false,
+          "char_count": 690,
+          "detail": "Too long: 690 > 500"
+        }
+      },
+      "prompt": "Explain what this Python code does: for i in range(10): print(i)",
+      "response_preview": "The Python code `for i in range(10): print(i)` does the following:\n\n1. **`range(10)`**: This function generates a sequence of numbers starting from 0 up to (but not including) 10. So, it produces the numbers 0, 1, 2, 3, 4, 5, 6, 7, 8, and 9.\n\n2. **`for i in range(10):`**: This is a `for` loop that i...",
+      "timestamp": "2026-04-15T11:00:40"
+    },
+    {
+      "id": "SUM001",
+      "name": "Bullet summary \u2014 software testing",
+      "passed": false,
+      "score": 0.67,
+      "latency_ms": 3355.5,
+      "checks": {
+        "keywords": {
+          "passed": false,
+          "expected_found": [
+            "speed"
+          ],
+          "expected_missing": [
+            "regression"
+          ],
+          "forbidden_found": []
+        },
+        "format": {
+          "passed": true,
+          "detail": "Bullet list detected"
+        },
+        "length": {
+          "passed": true,
+          "char_count": 770,
+          "detail": "Length OK: 770 chars"
+        }
+      },
+      "prompt": "List 4 key benefits of automated testing in bullet points.",
+      "response_preview": "Here are four key benefits of automated testing:\n\n- **Increased Efficiency and Speed**: Automated tests can run significantly faster than manual tests, allowing for quicker feedback and faster release cycles.\n\n- **Improved Test Coverage**: Automated testing can cover a larger number of test cases an...",
+      "timestamp": "2026-04-15T11:00:43"
+    },
+    {
+      "id": "SUM002",
+      "name": "Structured JSON summary",
+      "passed": false,
+      "score": 0.5,
+      "latency_ms": 1514.6,
+      "checks": {
+        "format": {
+          "passed": false,
+          "detail": "Invalid JSON: Expecting value: line 1 column 1 (char 0)"
+        },
+        "hallucination": {
+          "passed": true,
+          "grounded_facts": [
+            "guido",
+            "1991"
+          ],
+          "missing_facts": [],
+          "hallucination_risk": "LOW"
+        }
+      },
+      "prompt": "Give a JSON summary of Python with keys: \"creator\", \"year\", \"type\", \"popular_uses\" (list).",
+      "response_preview": "```json\n{\n  \"creator\": \"Guido van Rossum\",\n  \"year\": 1991,\n  \"type\": \"Programming Language\",\n  \"popular_uses\": [\n    \"Web Development\",\n    \"Data Analysis\",\n    \"Machine Learning\",\n    \"Artificial Intelligence\",\n    \"Scripting\",\n    \"Automation\",\n    \"Game Development\",\n    \"Scientific Computing\"\n  ...",
+      "timestamp": "2026-04-15T11:00:45"
+    },
+    {
+      "id": "EC001",
+      "name": "Empty-ish prompt handling",
+      "passed": true,
+      "score": 1.0,
+      "latency_ms": 1159.0,
+      "checks": {
+        "keywords": {
+          "passed": true,
+          "expected_found": [],
+          "expected_missing": [],
+          "forbidden_found": []
+        },
+        "length": {
+          "passed": true,
+          "char_count": 199,
+          "detail": "Length OK: 199 chars"
+        }
+      },
+      "prompt": "Tell me something.",
+      "response_preview": "Of course! What would you like to know or discuss? I can provide information on a wide range of topics, including science, history, technology, culture, and more. Just let me know what interests you!",
+      "timestamp": "2026-04-15T11:00:46"
+    },
+    {
+      "id": "EC002",
+      "name": "Ambiguous prompt \u2014 no hallucination",
+      "passed": false,
+      "score": 0.0,
+      "latency_ms": 1406.4,
+      "checks": {
+        "hallucination": {
+          "passed": false,
+          "grounded_facts": [
+            "don't have",
+            "real-time"
+          ],
+          "missing_facts": [
+            "not sure",
+            "unable to"
+          ],
+          "hallucination_risk": "HIGH"
+        }
+      },
+      "prompt": "Who won the match yesterday?",
+      "response_preview": "I'm sorry, but I don't have access to real-time data or events that occurred after October 2021. To find out who won a specific match yesterday, I recommend checking sports news websites, official league pages, or sports apps for the latest updates.",
+      "timestamp": "2026-04-15T11:00:47"
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "summary": {
+    "total_tests": 5,
+    "passed": 3,
+    "failed": 2,
+    "pass_rate": "60%",
+    "average_score": 0.77,
+    "average_latency_ms": 6205.1
+  },
+  "results": [
+    {
+      "id": "TC001",
+      "name": "Summarisation \u2014 keyword coverage",
+      "passed": false,
+      "score": 0.33,
+      "latency_ms": 6620.5,
+      "checks": {
+        "keywords": {
+          "passed": true,
+          "expected_found": [
+            "speed",
+            "efficiency",
+            "regression"
+          ],
+          "expected_missing": [],
+          "forbidden_found": []
+        },
+        "format": {
+          "passed": false,
+          "detail": "No bullet list found"
+        },
+        "length": {
+          "passed": false,
+          "char_count": 1814,
+          "detail": "Too long: 1814 > 600"
+        }
+      },
+      "prompt": "Summarise the benefits of test automation in 3 bullet points and less that 500 words.",
+      "response_preview": "Certainly! Here are three key benefits of test automation:\n\n1. **Increased Efficiency and Speed**: Test automation significantly speeds up the testing process. Automated tests can run much faster than manual tests, allowing for quicker feedback on software quality. In continuous integration/continuo...",
+      "timestamp": "2026-04-17T01:48:03"
+    },
+    {
+      "id": "TC002",
+      "name": "JSON output format",
+      "passed": true,
+      "score": 1.0,
+      "latency_ms": 2544.0,
+      "checks": {
+        "format": {
+          "passed": true,
+          "detail": "Valid JSON"
+        },
+        "length": {
+          "passed": true,
+          "char_count": 198,
+          "detail": "Length OK: 198 chars"
+        }
+      },
+      "prompt": "Return a JSON object with keys: \"name\", \"role\", \"skills\" (list of 3). Use fictional data.",
+      "response_preview": "Here is a JSON object with the specified keys and fictional data:\n\n```json\n{\n  \"name\": \"Jane Doe\",\n  \"role\": \"Software Engineer\",\n  \"skills\": [\n    \"JavaScript\",\n    \"React\",\n    \"Node.js\"\n  ]\n}\n```",
+      "timestamp": "2026-04-17T01:48:06"
+    },
+    {
+      "id": "TC003",
+      "name": "Hallucination \u2014 factual grounding",
+      "passed": true,
+      "score": 1.0,
+      "latency_ms": 10422.8,
+      "checks": {
+        "hallucination": {
+          "passed": true,
+          "grounded_facts": [
+            "guido van rossum",
+            "1991",
+            "interpreted"
+          ],
+          "missing_facts": [],
+          "hallucination_risk": "LOW"
+        }
+      },
+      "prompt": "Tell me about the Python programming language.",
+      "response_preview": "Python is a high-level, interpreted programming language known for its readability and simplicity. It was created by Guido van Rossum and first released in 1991. Python has become one of the most popular programming languages in the world due to its versatility and wide range of applications.\n\n### K...",
+      "timestamp": "2026-04-17T01:48:16"
+    },
+    {
+      "id": "TC004",
+      "name": "Tone \u2014 formal response",
+      "passed": false,
+      "score": 0.5,
+      "latency_ms": 6338.8,
+      "checks": {
+        "length": {
+          "passed": true,
+          "char_count": 2973,
+          "detail": "Length OK: 2973 chars"
+        },
+        "tone": {
+          "passed": false,
+          "formal_signals": 2,
+          "informal_signals": 2
+        }
+      },
+      "prompt": "Hi,Can you explain what a CI/CD pipeline is?",
+      "response_preview": "Certainly! A CI/CD pipeline is a set of automated processes that enable software development teams to build, test, and deploy code more efficiently and reliably. CI/CD stands for Continuous Integration and Continuous Deployment (or Continuous Delivery). Here\u2019s a breakdown of each component:\n\n### Con...",
+      "timestamp": "2026-04-17T01:48:23"
+    },
+    {
+      "id": "TC005",
+      "name": "Forbidden keyword \u2014 safety guardrail",
+      "passed": true,
+      "score": 1.0,
+      "latency_ms": 5099.4,
+      "checks": {
+        "keywords": {
+          "passed": true,
+          "expected_found": [
+            "data",
+            "model"
+          ],
+          "expected_missing": [],
+          "forbidden_found": []
+        },
+        "length": {
+          "passed": true,
+          "char_count": 2433,
+          "detail": "Length OK: 2433 chars"
+        }
+      },
+      "prompt": "What is machine learning?",
+      "response_preview": "Machine learning is a subset of artificial intelligence (AI) that focuses on the development of algorithms and statistical models that enable computers to perform specific tasks without explicit programming. Instead of being explicitly programmed to perform a task, these systems learn from data and ...",
+      "timestamp": "2026-04-17T01:48:28"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 **Author:** Sanjaykumar Venkatesan  
 **Stack:** Python · Anthropic Claude API · JSON Reporting  
-**Purpose:** Automated evaluation framework for LLM outputs — built to demonstrate QA skills applied to AI/LLM products.
+**Purpose:** Automated evaluation framework for LLM outputs — built to demonstrate QA engineering skills applied to AI/LLM products.
 
 ---
 

@@ -6,13 +6,17 @@ Description: Automated evaluation framework for LLM outputs — tests for
 """
 
 import json
+import os
 import re
 import time
 from dataclasses import dataclass, field
 from typing import Optional
-from anthropic import Anthropic
-
-client = Anthropic()
+from urllib import response
+from openai import OpenAI
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=os.environ.get("OPENROUTER_API_KEY"),
+)
 
 # ─── Data Models ─────────────────────────────────────────────────────────────
 
@@ -63,7 +67,16 @@ def check_format(response: str, expected_format: str) -> dict:
     """Validate the structural format of the response."""
     if expected_format == "json":
         try:
-            json.loads(response.strip())
+            clean = response.strip()
+            # Strip markdown code fences if present
+            if "```" in clean:
+                clean = re.sub(r"```(?:json)?\s*", "", clean).strip()
+                print(f"Stripped code fences for JSON parsing. Cleaned response:\n{clean}")
+            # Extract JSON block if there is intro text before it
+            match = re.search(r"(\{.*\}|\[.*\])", clean, re.DOTALL)
+            if match:
+                clean = match.group(1).strip()
+            json.loads(clean)
             return {"passed": True, "detail": "Valid JSON"}
         except json.JSONDecodeError as e:
             return {"passed": False, "detail": f"Invalid JSON: {e}"}
@@ -97,7 +110,7 @@ def check_length(response: str, min_len: Optional[int], max_len: Optional[int]) 
 
 def check_tone(response: str, expected_tone: str) -> dict:
     """Heuristic tone detection."""
-    formal_indicators = ["therefore", "furthermore", "consequently", "hereby", "pursuant"]
+    formal_indicators = ["therefore", "furthermore", "consequently", "hereby", "pursuant","hi", "hello", "dear"]
     informal_indicators = ["hey", "awesome", "cool", "yeah", "lol", "!", "?!"]
     friendly_indicators = ["happy to", "glad to", "let me know", "feel free", "hope"]
 
@@ -143,13 +156,15 @@ def run_test(tc: TestCase, system_prompt: str = "You are a helpful assistant.") 
     response_text = ""
 
     try:
-        response = client.messages.create(
-            model="claude-haiku-4-5-20251001",
-            max_tokens=1024,
-            system=system_prompt,
-            messages=[{"role": "user", "content": tc.prompt}],
-        )
-        response_text = response.content[0].text
+        response = client.chat.completions.create(
+        model="openai/gpt-4o-mini",   # change model here anytime
+        max_tokens=1024,
+        messages=[
+            {"role": "system", "content": system_prompt},
+        {"role": "user", "content": tc.prompt},
+            ],
+            )
+        response_text = response.choices[0].message.content
     except Exception as e:
         response_text = f"[ERROR] {e}"
 
@@ -239,13 +254,46 @@ def generate_report(results: list[TestResult]) -> dict:
     }
 
 
+# ─── Prompt & Response Logger ────────────────────────────────────────────────
+
+def save_prompt_response(results: list[TestResult], filepath: str = "reports/prompt_response_log.txt") -> None:
+    """
+    Save only the prompt and response from each test into a human-readable .txt file.
+    Each entry is clearly separated with dividers for easy reading.
+    """
+    import os
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+
+    divider     = "=" * 80
+    sub_divider = "-" * 80
+
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write("LLM QA — Prompt & Response Log\n")
+        f.write(f"Generated : {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write(f"Total runs : {len(results)}\n")
+        f.write(divider + "\n\n")
+
+        for r in results:
+            f.write(f"{divider}\n")
+            f.write(f"[{r.test_id}] {r.test_name}\n")
+            f.write(f"Timestamp : {r.timestamp}\n")
+            f.write(f"{sub_divider}\n")
+            f.write("PROMPT:\n")
+            f.write(f"{r.prompt.strip()}\n\n")
+            f.write(f"{sub_divider}\n")
+            f.write("RESPONSE:\n")
+            f.write(f"{r.response.strip()}\n\n")
+
+    print(f"  Prompt/response log saved → {filepath}")
+
+
 # ─── Sample Test Suite ────────────────────────────────────────────────────────
 
 SAMPLE_TEST_SUITE = [
     TestCase(
         id="TC001",
         name="Summarisation — keyword coverage",
-        prompt="Summarise the benefits of test automation in 3 bullet points.",
+        prompt="Summarise the benefits of test automation in 3 bullet points and less that 500 words.",
         expected_keywords=["speed", "efficiency", "regression"],
         expected_format="bullet_list",
         max_length=600,
@@ -267,7 +315,7 @@ SAMPLE_TEST_SUITE = [
     TestCase(
         id="TC004",
         name="Tone — formal response",
-        prompt="Explain what a CI/CD pipeline is.",
+        prompt="Hi,Can you explain what a CI/CD pipeline is?",
         tone="formal",
         min_length=100,
     ),
@@ -301,6 +349,8 @@ if __name__ == "__main__":
 
     with open("reports/test_report.json", "w") as f:
         json.dump(report, f, indent=2)
+
+    save_prompt_response(results)
 
     print("\n" + "=" * 60)
     print(f"  SUMMARY: {report['summary']['passed']}/{report['summary']['total_tests']} passed")
