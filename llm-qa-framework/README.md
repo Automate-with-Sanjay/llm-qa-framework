@@ -1,8 +1,8 @@
 # LLM QA Testing Framework
 
 **Author:** Sanjaykumar Venkatesan  
-**Stack:** Python · Anthropic Claude API · JSON Reporting  
-**Purpose:** Automated evaluation framework for LLM outputs — built to demonstrate QA engineering skills applied to AI/LLM products.
+**Stack:** Python · Openrouter API · JSON Reporting  
+**Purpose:** Automated evaluation framework for LLM outputs(Responses)
 
 ---
 
@@ -42,13 +42,13 @@ llm-qa-framework/
 ### 1. Install dependencies
 
 ```bash
-pip install anthropic
+pip install Openai
 ```
 
 ### 2. Set your API key
 
 ```bash
-export ANTHROPIC_API_KEY=your_key_here
+$env:OPENROUTER_API_KEY = "your_key_here"
 ```
 
 ### 3. Run the sample suite
@@ -57,10 +57,11 @@ export ANTHROPIC_API_KEY=your_key_here
 python llm_qa_framework.py
 ```
 
-### 4. View the report
+### 4. View the reports and logs
 
 ```bash
-cat reports/test_report.json
+cat reports\test_report.json
+cat reports\prompt_response_log.txt
 ```
 
 ---
