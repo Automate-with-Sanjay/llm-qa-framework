@@ -1,19 +1,19 @@
 {
   "summary": {
     "total_tests": 5,
-    "passed": 3,
-    "failed": 2,
-    "pass_rate": "60%",
-    "average_score": 0.77,
-    "average_latency_ms": 6205.1
+    "passed": 2,
+    "failed": 3,
+    "pass_rate": "40%",
+    "average_score": 0.73,
+    "average_latency_ms": 5650.4
   },
   "results": [
     {
       "id": "TC001",
       "name": "Summarisation \u2014 keyword coverage",
       "passed": false,
-      "score": 0.33,
-      "latency_ms": 6620.5,
+      "score": 0.67,
+      "latency_ms": 5778.0,
       "checks": {
         "keywords": {
           "passed": true,
@@ -26,25 +26,25 @@
           "forbidden_found": []
         },
         "format": {
-          "passed": false,
-          "detail": "No bullet list found"
+          "passed": true,
+          "detail": "Bullet list detected"
         },
         "length": {
           "passed": false,
-          "char_count": 1814,
-          "detail": "Too long: 1814 > 600"
+          "char_count": 1249,
+          "detail": "Too long: 1249 > 600"
         }
       },
       "prompt": "Summarise the benefits of test automation in 3 bullet points and less that 500 words.",
-      "response_preview": "Certainly! Here are three key benefits of test automation:\n\n1. **Increased Efficiency and Speed**: Test automation significantly speeds up the testing process. Automated tests can run much faster than manual tests, allowing for quicker feedback on software quality. In continuous integration/continuo...",
-      "timestamp": "2026-04-17T01:48:03"
+      "response_preview": "- **Increased Efficiency and Speed**: Test automation significantly accelerates the testing process by executing test cases quickly and consistently. Automated tests can run overnight or during off-peak hours, leading to faster feedback cycles. This allows developers to identify and fix defects earl...",
+      "timestamp": "2026-04-17T02:32:16"
     },
     {
       "id": "TC002",
       "name": "JSON output format",
       "passed": true,
       "score": 1.0,
-      "latency_ms": 2544.0,
+      "latency_ms": 1278.5,
       "checks": {
         "format": {
           "passed": true,
@@ -52,20 +52,20 @@
         },
         "length": {
           "passed": true,
-          "char_count": 198,
-          "detail": "Length OK: 198 chars"
+          "char_count": 164,
+          "detail": "Length OK: 164 chars"
         }
       },
       "prompt": "Return a JSON object with keys: \"name\", \"role\", \"skills\" (list of 3). Use fictional data.",
-      "response_preview": "Here is a JSON object with the specified keys and fictional data:\n\n```json\n{\n  \"name\": \"Jane Doe\",\n  \"role\": \"Software Engineer\",\n  \"skills\": [\n    \"JavaScript\",\n    \"React\",\n    \"Node.js\"\n  ]\n}\n```",
-      "timestamp": "2026-04-17T01:48:06"
+      "response_preview": "Here is a JSON object with fictional data:\n\n```json\n{\n  \"name\": \"Alice Johnson\",\n  \"role\": \"Software Engineer\",\n  \"skills\": [\"JavaScript\", \"React\", \"Node.js\"]\n}\n```",
+      "timestamp": "2026-04-17T02:32:18"
     },
     {
       "id": "TC003",
       "name": "Hallucination \u2014 factual grounding",
       "passed": true,
       "score": 1.0,
-      "latency_ms": 10422.8,
+      "latency_ms": 8875.1,
       "checks": {
         "hallucination": {
           "passed": true,
@@ -79,56 +79,57 @@
         }
       },
       "prompt": "Tell me about the Python programming language.",
-      "response_preview": "Python is a high-level, interpreted programming language known for its readability and simplicity. It was created by Guido van Rossum and first released in 1991. Python has become one of the most popular programming languages in the world due to its versatility and wide range of applications.\n\n### K...",
-      "timestamp": "2026-04-17T01:48:16"
+      "response_preview": "Python is a high-level, interpreted programming language known for its clear syntax and readability. It was created by Guido van Rossum and first released in 1991. Python is designed to be easy to understand and write, which makes it an excellent choice for both beginners and experienced programmers...",
+      "timestamp": "2026-04-17T02:32:27"
     },
     {
       "id": "TC004",
       "name": "Tone \u2014 formal response",
       "passed": false,
       "score": 0.5,
-      "latency_ms": 6338.8,
+      "latency_ms": 10809.4,
       "checks": {
         "length": {
           "passed": true,
-          "char_count": 2973,
-          "detail": "Length OK: 2973 chars"
+          "char_count": 3456,
+          "detail": "Length OK: 3456 chars"
         },
         "tone": {
           "passed": false,
-          "formal_signals": 2,
+          "formal_signals": 1,
           "informal_signals": 2
         }
       },
       "prompt": "Hi,Can you explain what a CI/CD pipeline is?",
-      "response_preview": "Certainly! A CI/CD pipeline is a set of automated processes that enable software development teams to build, test, and deploy code more efficiently and reliably. CI/CD stands for Continuous Integration and Continuous Deployment (or Continuous Delivery). Here\u2019s a breakdown of each component:\n\n### Con...",
-      "timestamp": "2026-04-17T01:48:23"
+      "response_preview": "Certainly! CI/CD stands for Continuous Integration and Continuous Deployment (or Continuous Delivery), and it refers to a set of practices, tools, and processes that automate the software development lifecycle. The primary goal of CI/CD is to enable teams to deliver code changes more frequently, rel...",
+      "timestamp": "2026-04-17T02:32:37"
     },
     {
       "id": "TC005",
       "name": "Forbidden keyword \u2014 safety guardrail",
-      "passed": true,
-      "score": 1.0,
-      "latency_ms": 5099.4,
+      "passed": false,
+      "score": 0.5,
+      "latency_ms": 1510.8,
       "checks": {
         "keywords": {
-          "passed": true,
+          "passed": false,
           "expected_found": [
-            "data",
             "model"
           ],
-          "expected_missing": [],
+          "expected_missing": [
+            "data"
+          ],
           "forbidden_found": []
         },
         "length": {
           "passed": true,
-          "char_count": 2433,
-          "detail": "Length OK: 2433 chars"
+          "char_count": 153,
+          "detail": "Length OK: 153 chars"
         }
       },
       "prompt": "What is machine learning?",
-      "response_preview": "Machine learning is a subset of artificial intelligence (AI) that focuses on the development of algorithms and statistical models that enable computers to perform specific tasks without explicit programming. Instead of being explicitly programmed to perform a task, these systems learn from data and ...",
-      "timestamp": "2026-04-17T01:48:28"
+      "response_preview": "Machine learning is a subfield of artificial intelligence (AI) that focuses on the development of algorithms and statistical models that enable computers",
+      "timestamp": "2026-04-17T02:32:39"
     }
   ]
 }
